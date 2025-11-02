@@ -73,7 +73,7 @@ pub async fn request_power_flow(cfg: &Config) -> Result<PowerFlow> {
 
 #[cfg(test)]
 mod test {
-    use chrono::{DateTime, NaiveDateTime, TimeZone};
+    use chrono::{NaiveDateTime, TimeZone};
 
     use super::*;
 
