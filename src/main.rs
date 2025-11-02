@@ -1,15 +1,17 @@
 mod config;
 mod db;
 mod solar_api;
+mod unstable_api;
 
 use anyhow::Result;
-use chrono::DateTime;
+use chrono::{DateTime, NaiveDateTime, TimeZone};
 use std::time::Duration;
 
 use crate::{
     config::Config,
-    db::{InverterReading, SmartMeterReading, StorageReading, db_client},
+    db::{InverterReading, SmartMeterReading, StorageReading, UnstablePowerFlowReading, db_client},
     solar_api::{request_inverter_info, request_meter_info, request_storage_info},
+    unstable_api::request_power_flow,
 };
 use influxdb::InfluxDbWriteable;
 
@@ -76,8 +78,41 @@ async fn poll_and_push(cfg: &Config) -> Result<()> {
         .into_query("inverter_reading")
     };
 
+    let power_flow_reading = {
+        let power_flow = request_power_flow(cfg).await?;
+        let site = &power_flow.site;
+
+        let datetime = NaiveDateTime::parse_from_str(
+            &format!(
+                "{} {}",
+                power_flow.common.datestamp, power_flow.common.timestamp
+            ),
+            "%d.%m.%Y %H:%M:%S",
+        )
+        .unwrap();
+        let time = chrono::Local
+            .from_local_datetime(&datetime)
+            .unwrap()
+            .to_utc();
+
+        UnstablePowerFlowReading {
+            time,
+            p_akku: site.p_akku,
+            p_grid: site.p_grid,
+            p_pv: site.p_pv,
+            rel_autonomy: site.rel_autonomy,
+            rel_self_consumption: site.rel_self_consumption,
+        }
+        .into_query("power_flow_reading")
+    };
+
     db_client(cfg)
-        .query(vec![smart_meter_reading, storage_reading, inverter_reading])
+        .query(vec![
+            smart_meter_reading,
+            storage_reading,
+            inverter_reading,
+            power_flow_reading,
+        ])
         .await?;
 
     Ok(())

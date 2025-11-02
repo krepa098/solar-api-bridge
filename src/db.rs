@@ -29,6 +29,16 @@ pub struct InverterReading {
     pub pac: f32,
 }
 
+#[derive(InfluxDbWriteable)]
+pub struct UnstablePowerFlowReading {
+    pub time: DateTime<Utc>,
+    pub rel_autonomy: f32,
+    pub rel_self_consumption: f32,
+    pub p_pv: f32,
+    pub p_grid: f32,
+    pub p_akku: f32,
+}
+
 pub fn db_client(cfg: &Config) -> Client {
     influxdb::Client::new(&cfg.influxdb_url, &cfg.influxdb_database)
         .with_auth(&cfg.influxdb_user, &cfg.influxdb_password)
