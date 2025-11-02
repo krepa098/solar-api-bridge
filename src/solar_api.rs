@@ -216,34 +216,28 @@ pub struct Quantity {
 pub async fn request_meter_info(cfg: &Config) -> Result<MeterRealtimeData> {
     const ENDPOINT: &str = "solar_api/v1/GetMeterRealtimeData.cgi";
     let url = format!("{}/{}", cfg.inverter_url, ENDPOINT);
+    let data = reqwest::get(url).await?.bytes().await?;
+    let json = serde_json::from_slice(&data)?;
 
-    let text = reqwest::get(url).await?.bytes().await?;
-
-    let data = serde_json::from_slice(&text)?;
-
-    Ok(data)
+    Ok(json)
 }
 
 pub async fn request_storage_info(cfg: &Config) -> Result<StorageRealtimeData> {
     const ENDPOINT: &str = "solar_api/v1/GetStorageRealtimeData.cgi";
     let url = format!("{}/{}", cfg.inverter_url, ENDPOINT);
+    let data = reqwest::get(url).await?.bytes().await?;
+    let json = serde_json::from_slice(&data)?;
 
-    let text = reqwest::get(url).await?.bytes().await?;
-
-    let data = serde_json::from_slice(&text)?;
-
-    Ok(data)
+    Ok(json)
 }
 
 pub async fn request_inverter_info(cfg: &Config) -> Result<InverterRealtimeData> {
     const ENDPOINT: &str = "solar_api/v1/GetInverterRealtimeData.cgi";
     let url = format!("{}/{}", cfg.inverter_url, ENDPOINT);
+    let data = reqwest::get(url).await?.bytes().await?;
+    let json = serde_json::from_slice(&data)?;
 
-    let text = reqwest::get(url).await?.bytes().await?;
-
-    let data = serde_json::from_slice(&text)?;
-
-    Ok(data)
+    Ok(json)
 }
 
 #[cfg(test)]
