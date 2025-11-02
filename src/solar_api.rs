@@ -47,7 +47,7 @@ pub struct MeterRealtimeDataChannel {
     #[serde(rename = "Enable")]
     pub enable: i32,
     #[serde(rename = "EnergyReal_WAC_Minus_Absolute")]
-    pub energy_real_wac_minus_absolute: f32,
+    pub energy_real_wac_minus_absolute: f32, // export to grid (absolute counter)
     #[serde(rename = "EnergyReal_WAC_Phase_1_Consumed")]
     pub energy_real_wac_phase_1_consumed: f32,
     #[serde(rename = "EnergyReal_WAC_Phase_1_Produced")]
@@ -61,7 +61,7 @@ pub struct MeterRealtimeDataChannel {
     #[serde(rename = "EnergyReal_WAC_Phase_3_Produced")]
     pub energy_real_wac_phase_3_produced: f32,
     #[serde(rename = "EnergyReal_WAC_Plus_Absolute")]
-    pub energy_real_wac_plus_absolute: f32,
+    pub energy_real_wac_plus_absolute: f32, // import from grid (absolute counter)
     #[serde(rename = "EnergyReal_WAC_Sum_Consumed")]
     pub energy_real_wac_sum_consumed: f32,
     #[serde(rename = "EnergyReal_WAC_Sum_Produced")]
@@ -101,7 +101,7 @@ pub struct MeterRealtimeDataChannel {
     #[serde(rename = "PowerReal_P_Phase_3")]
     pub power_real_p_phase_3: f32,
     #[serde(rename = "PowerReal_P_Sum")]
-    pub power_real_p_sum: f32,
+    pub power_real_p_sum: f32, // (+ consuming from grid, - feeding in to grid)
     #[serde(rename = "TimeStamp")]
     pub time_stamp: u64,
     #[serde(rename = "Visible")]

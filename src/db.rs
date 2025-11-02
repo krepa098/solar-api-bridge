@@ -20,6 +20,7 @@ pub struct SmartMeterReading {
     pub energy_real_wac_sum_consumed: f32,
     pub energy_real_wac_plus_absolute: f32,
     pub energy_real_wac_minus_absolute: f32,
+    pub frequency_phase_average: f32,
 }
 
 #[derive(InfluxDbWriteable)]

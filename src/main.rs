@@ -34,15 +34,16 @@ async fn poll_and_push(cfg: &Config) -> Result<()> {
         let meter_info = request_meter_info(cfg).await?;
         let time = DateTime::from_timestamp_secs(meter_info.body.data["0"].time_stamp as i64)
             .ok_or(anyhow::anyhow!("malformed timestamp"))?;
-        let channel = &meter_info.body.data["0"];
+        let ch = &meter_info.body.data["0"];
 
         SmartMeterReading {
             time,
-            power_real_p_sum: channel.power_real_p_sum,
-            energy_real_wac_sum_consumed: channel.energy_real_wac_sum_consumed,
-            energy_real_wac_sum_produced: channel.energy_real_wac_sum_produced,
-            energy_real_wac_minus_absolute: channel.energy_real_wac_minus_absolute,
-            energy_real_wac_plus_absolute: channel.energy_real_wac_plus_absolute,
+            power_real_p_sum: ch.power_real_p_sum,
+            energy_real_wac_sum_consumed: ch.energy_real_wac_sum_consumed,
+            energy_real_wac_sum_produced: ch.energy_real_wac_sum_produced,
+            energy_real_wac_minus_absolute: ch.energy_real_wac_minus_absolute,
+            energy_real_wac_plus_absolute: ch.energy_real_wac_plus_absolute,
+            frequency_phase_average: ch.frequency_phase_average,
         }
         .into_query("smart_meter_reading")
     };
