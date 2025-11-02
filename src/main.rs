@@ -102,6 +102,7 @@ async fn poll_and_push(cfg: &Config) -> Result<()> {
             p_pv: site.p_pv,
             rel_autonomy: site.rel_autonomy,
             rel_self_consumption: site.rel_self_consumption,
+            e_total: site.e_total,
         }
         .into_query("power_flow_reading")
     };
