@@ -59,7 +59,7 @@ pub struct PowerFlowSite {
     #[serde(rename = "rel_Autonomy")]
     pub rel_autonomy: f32,
     #[serde(rename = "rel_SelfConsumption")]
-    pub rel_self_consumption: f32,
+    pub rel_self_consumption: Option<f32>,
 }
 
 pub async fn request_power_flow(cfg: &Config) -> Result<PowerFlow> {
