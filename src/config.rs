@@ -22,7 +22,7 @@ impl Config {
     }
 
     pub fn print(&self) {
-        println!("Config:");
+        println!("config:");
         println!("- inverter url: {}", self.inverter_url);
         println!("- influxdb url: {}", self.influxdb_url);
         println!("- influxdb database: {}", self.influxdb_database);

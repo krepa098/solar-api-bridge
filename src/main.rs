@@ -15,6 +15,7 @@ use influxdb::InfluxDbWriteable;
 
 #[tokio::main]
 async fn main() {
+    println!("{} {}", env!("CARGO_CRATE_NAME"), env!("CARGO_PKG_VERSION"));
     let cfg = Config::new_from_env();
     cfg.print();
 
