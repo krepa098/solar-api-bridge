@@ -40,6 +40,8 @@ async fn poll_and_push(cfg: &Config) -> Result<()> {
             power_real_p_sum: channel.power_real_p_sum,
             energy_real_wac_sum_consumed: channel.energy_real_wac_sum_consumed,
             energy_real_wac_sum_produced: channel.energy_real_wac_sum_produced,
+            energy_real_wac_minus_absolute: channel.energy_real_wac_minus_absolute,
+            energy_real_wac_plus_absolute: channel.energy_real_wac_plus_absolute,
         }
         .into_query("smart_meter_reading")
     };
